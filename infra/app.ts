@@ -19,14 +19,14 @@ const app = new cdk.App();
 const functionNames = getFunctionNames('../apps');
 
 new IAMStack(app, 'IAMStack', {
-  stackName: `${ENVIRONMENT}-iam-stack`,
+  stackName: `lambda-monorepo-${ENVIRONMENT}-iam-stack`,
   tags: tags,
   env,
   functionNames,
 });
 
 new LambdaStack(app, 'LambdaStack', {
-  stackName: `${ENVIRONMENT}-lambda-stack`,
+  stackName: `lambda-monorepo-${ENVIRONMENT}-lambda-stack`,
   tags: tags,
   env,
   functionNames,

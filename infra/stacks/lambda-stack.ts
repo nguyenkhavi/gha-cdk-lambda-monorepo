@@ -28,9 +28,9 @@ export class LambdaStack extends Stack {
         role: Role.fromRoleName(
           this,
           getResourceId('IAM', name),
-          `${this.stackName}-${name}-lambda-function-execution`
+          getLambdaExecRoleName(name)
         ),
-        functionName: getLambdaExecRoleName(name),
+        functionName: `${this.stackName}-${name}`,
       });
     });
   }
