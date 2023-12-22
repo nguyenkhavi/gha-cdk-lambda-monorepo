@@ -1,7 +1,7 @@
 {
-  "name": "gha-cdk-lambda-monorepo",
+  "name": "thumbnail-generator",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/gha-cdk-lambda-monorepo/src",
+  "sourceRoot": "apps/thumbnail-generator/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,12 +10,12 @@
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/apps/gha-cdk-lambda-monorepo",
+        "outputPath": "dist/apps/thumbnail-generator",
         "format": ["cjs"],
         "bundle": false,
-        "main": "apps/gha-cdk-lambda-monorepo/src/main.ts",
-        "tsConfig": "apps/gha-cdk-lambda-monorepo/tsconfig.app.json",
-        "assets": ["apps/gha-cdk-lambda-monorepo/src/assets"],
+        "main": "apps/thumbnail-generator/src/main.ts",
+        "tsConfig": "apps/thumbnail-generator/tsconfig.app.json",
+        "assets": ["apps/thumbnail-generator/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -27,7 +27,6 @@
       "configurations": {
         "development": {},
         "production": {
-          "generateLockfile": true,
           "esbuildOptions": {
             "sourcemap": false,
             "outExtension": {
@@ -41,14 +40,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "gha-cdk-lambda-monorepo:build"
+        "buildTarget": "thumbnail-generator:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "gha-cdk-lambda-monorepo:build:development"
+          "buildTarget": "thumbnail-generator:build:development"
         },
         "production": {
-          "buildTarget": "gha-cdk-lambda-monorepo:build:production"
+          "buildTarget": "thumbnail-generator:build:production"
         }
       }
     },
@@ -60,12 +59,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/gha-cdk-lambda-monorepo/jest.config.ts"
+        "jestConfig": "apps/thumbnail-generator/jest.config.ts"
       }
-    },
-    "docker-build": {
-      "dependsOn": ["build"],
-      "command": "docker build -f apps/gha-cdk-lambda-monorepo/Dockerfile . -t gha-cdk-lambda-monorepo"
     }
   },
   "tags": []

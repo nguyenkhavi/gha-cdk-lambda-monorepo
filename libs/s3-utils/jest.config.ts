@@ -1,11 +1,11 @@
 /* eslint-disable */
 export default {
-  displayName: 'gha-cdk-lambda-monorepo',
+  displayName: 's3-utils',
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/gha-cdk-lambda-monorepo',
+  coverageDirectory: '../../coverage/libs/s3-utils',
 };

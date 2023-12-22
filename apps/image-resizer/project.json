@@ -1,0 +1,67 @@
+{
+  "name": "image-resizer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/image-resizer/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/image-resizer",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/image-resizer/src/main.ts",
+        "tsConfig": "apps/image-resizer/tsconfig.app.json",
+        "assets": ["apps/image-resizer/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "image-resizer:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "image-resizer:build:development"
+        },
+        "production": {
+          "buildTarget": "image-resizer:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/image-resizer/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
