@@ -149,7 +149,7 @@ Don't forget to configure alias import paths in your `tsconfig.base.json` file:
 }
 ```
 
-## Customization
+<!-- ## Customization
 
 ### Changing Source Code
 
@@ -161,7 +161,7 @@ The Dockerfile (Dockerfile) in the root directory defines the configuration for 
 
 ### Customizing AWS CDK Scripts
 
-The AWS CDK scripts are located in the infra directory. Customize the scripts in infra to define your AWS infrastructure according to your requirements.
+The AWS CDK scripts are located in the infra directory. Customize the scripts in infra to define your AWS infrastructure according to your requirements. -->
 
 ## To-Do List
 
