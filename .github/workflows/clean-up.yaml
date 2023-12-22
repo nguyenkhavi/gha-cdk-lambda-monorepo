@@ -54,9 +54,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Create fake dir
-        run: |
-          mkdir mydirname
+      - name: Download dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
