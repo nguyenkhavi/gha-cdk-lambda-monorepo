@@ -19,7 +19,32 @@ env:
   BUILD_SOURCE_VERSION: ${{ github.sha }}
 
 jobs:
+  build_asset:
+    name: Build Asset
+    runs-on: ubuntu-latest
+    environment: Development
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE }}
+      - name: Build, tag, and push image to Amazon ECR
+        working-directory: .
+        run: |
+          yarn
+          yarn nx run-many -t build --all
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
   cdk_destroy:
+    needs: build_asset
     name: Destroy the CDK
     runs-on: ubuntu-latest
     environment: Development
@@ -29,11 +54,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Download dist
-        uses: actions/download-artifact@v3
-        with:
-          name: dist
-          path: dist
+      - name: Create fake dir
+        run: |
+          mkdir mydirname
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
