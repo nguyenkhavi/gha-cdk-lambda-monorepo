@@ -23,3 +23,7 @@ const camalize = (str: string) => {
 export const getResourceId = (resourceName: string, funcName: string) => {
   return `${camalize(funcName)}${resourceName}`;
 };
+
+export const getLambdaExecRoleName = (funcName: string) => {
+  return `${ENVIRONMENT}-${funcName}-lambda-function-execution`;
+};

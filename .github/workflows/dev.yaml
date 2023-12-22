@@ -69,6 +69,7 @@ jobs:
       - name: Install project dependencies
         run: cd infra && yarn install
       - name: Bootstrap CDK
+        if: ${{ vars.CDK_BOOTSTRAP == 'true' }}
         working-directory: infra
         run: |
           yarn cdk bootstrap

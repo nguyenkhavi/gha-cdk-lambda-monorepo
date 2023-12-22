@@ -10,6 +10,7 @@ import {
   AWS_ACCOUNT_ID,
   AWS_REGION,
   BaseStackProps,
+  getLambdaExecRoleName,
   getResourceId,
 } from '../utils';
 
@@ -24,7 +25,7 @@ export class IAMStack extends Stack {
         getResourceId('LambdaFunctionExecutionRole', name),
         {
           assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
-          roleName: `${this.stackName}-${name}-lambda-function-execution`,
+          roleName: getLambdaExecRoleName(name),
           managedPolicies: [
             ManagedPolicy.fromAwsManagedPolicyName(
               'service-role/AWSLambdaBasicExecutionRole'
