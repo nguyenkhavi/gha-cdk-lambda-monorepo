@@ -10,7 +10,7 @@
     "test": "jest",
     "cdk": "cdk",
     "cdk:deploy:iam-stack": "cdk deploy IAMStack",
-    "cdk:deploy:ecr-stack": "cdk deploy ECRStack",
+    "cdk:deploy:lambda-stack": "cdk deploy LambdaStack",
     "cdk:deploy:ecs-stack": "cdk deploy ECSStack"
   },
   "devDependencies": {

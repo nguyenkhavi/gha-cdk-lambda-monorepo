@@ -8,6 +8,7 @@ import {
   ENVIRONMENT,
   getFunctionNames,
 } from './utils';
+import { LambdaStack } from './stacks/lambda-stack';
 
 const tags = {
   'company:environment': ENVIRONMENT,
@@ -19,6 +20,13 @@ const functionNames = getFunctionNames('../apps');
 
 new IAMStack(app, 'IAMStack', {
   stackName: `${ENVIRONMENT}-iam-stack`,
+  tags: tags,
+  env,
+  functionNames,
+});
+
+new LambdaStack(app, 'LambdaStack', {
+  stackName: `${ENVIRONMENT}-lambda-stack`,
   tags: tags,
   env,
   functionNames,

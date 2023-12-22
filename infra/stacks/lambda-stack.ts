@@ -24,6 +24,11 @@ export class LambdaStack extends Stack {
         code: Code.fromAsset(`../dist/apps/${name}`),
         environment: {},
         handler: 'main.handler',
+        role: Role.fromRoleName(
+          this,
+          getResourceId('IAM', name),
+          `${this.stackName}-${name}-lambda-function-execution`
+        ),
         functionName: `${this.stackName}-${name}`,
       });
     });

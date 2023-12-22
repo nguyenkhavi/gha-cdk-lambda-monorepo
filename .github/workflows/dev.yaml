@@ -1,0 +1,92 @@
+name: Development
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+concurrency: development
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+  APPLICATION_ID: ${{ vars.APPLICATION_ID }}
+  ENVIRONMENT: ${{ github.ref_name }}
+  BUILD_ID: ${{ github.run_id }}
+  BUILD_NUMBER: ${{ github.run_number }}-${{ github.run_attempt}}
+  BUILD_SOURCE_VERSION: ${{ github.sha }}
+
+jobs:
+  iam_deploy:
+    name: Deploy IAM Task execution Role Development
+    runs-on: ubuntu-latest
+    environment: Development
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE}}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+          cache-dependency-path: infra/yarn.lock
+      - name: Install project dependencies
+        run: cd infra && yarn install
+      - name: Bootstrap CDK
+        working-directory: infra
+        run: |
+          yarn cdk bootstrap
+      - name: Deploy IAM
+        working-directory: infra
+        run: |
+          yarn cdk:deploy:iam-stack
+  build_asset:
+    name: Build Asset
+    runs-on: ubuntu-latest
+    environment: Development
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE }}
+      - name: Build, tag, and push image to Amazon ECR
+        working-directory: .
+        run: |
+          yarn
+          yarn nx run-many -t build --all
+  lambda_deploy:
+    needs: [build_asset, iam_deploy]
+    name: Deploy Lambda
+    runs-on: ubuntu-latest
+    environment: Development
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE}}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+          cache-dependency-path: infra/yarn.lock
+      - name: Install project dependencies
+        run: cd infra && yarn install
+      - name: Deploy
+        working-directory: infra
+        run: |
+          yarn cdk:deploy:lambda-stack
