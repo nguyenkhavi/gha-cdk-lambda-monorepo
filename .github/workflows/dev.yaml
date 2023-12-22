@@ -1,8 +1,8 @@
 name: Development
 on:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
   workflow_dispatch:
 concurrency: development
 env:
@@ -15,7 +15,26 @@ env:
   BUILD_SOURCE_VERSION: ${{ github.sha }}
 
 jobs:
+  build_asset:
+    name: Build Asset
+    runs-on: ubuntu-latest
+    environment: Development
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: ${{ vars.AWS_ROLE }}
+      - name: Build, tag, and push image to Amazon ECR
+        working-directory: .
+        run: |
+          yarn
+          yarn nx run-many -t build --all
   iam_deploy:
+    needs: build_asset
     name: Deploy IAM Task execution Role Development
     runs-on: ubuntu-latest
     environment: Development
@@ -45,26 +64,8 @@ jobs:
         working-directory: infra
         run: |
           yarn cdk:deploy:iam-stack
-  build_asset:
-    name: Build Asset
-    runs-on: ubuntu-latest
-    environment: Development
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - uses: actions/checkout@v3
-      - uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-region: ${{ vars.AWS_REGION }}
-          role-to-assume: ${{ vars.AWS_ROLE }}
-      - name: Build, tag, and push image to Amazon ECR
-        working-directory: .
-        run: |
-          yarn
-          yarn nx run-many -t build --all
   lambda_deploy:
-    needs: [build_asset, iam_deploy]
+    needs: [iam_deploy]
     name: Deploy Lambda
     runs-on: ubuntu-latest
     environment: Development
