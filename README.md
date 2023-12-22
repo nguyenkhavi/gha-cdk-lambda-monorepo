@@ -35,8 +35,11 @@ We believe that your coding experience should be as smooth as possible, allowing
 ## Features
 
 **AWS CDK Integration**: Utilize the AWS CDK to define and deploy Lambda functions with ease, using familiar programming languages.
+
 **NX Monorepo Structure**: Organize your serverless functions in a structured NX monorepo, simplifying development, testing, and maintenance.
+
 **GitHub Actions CI/CD Pipeline**: Automate the build and deployment workflows for your Lambda functions with GitHub Actions, ensuring a streamlined and efficient development lifecycle.
+
 **Multiple Lambda Functions**: Easily manage and deploy multiple Lambda functions within the same project, keeping your serverless architecture organized.
 
 ## Prerequisites
