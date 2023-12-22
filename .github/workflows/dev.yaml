@@ -33,6 +33,13 @@ jobs:
         run: |
           yarn
           yarn nx run-many -t build --all
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
   iam_deploy:
     needs: build_asset
     name: Deploy IAM Task execution Role Development
@@ -44,6 +51,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Download dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -75,6 +86,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Download dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
