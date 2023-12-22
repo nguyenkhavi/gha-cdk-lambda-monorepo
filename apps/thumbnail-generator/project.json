@@ -12,7 +12,7 @@
         "platform": "node",
         "outputPath": "dist/apps/thumbnail-generator",
         "format": ["cjs"],
-        "bundle": false,
+        "bundle": true,
         "main": "apps/thumbnail-generator/src/main.ts",
         "tsConfig": "apps/thumbnail-generator/tsconfig.app.json",
         "assets": ["apps/thumbnail-generator/src/assets"],

@@ -12,7 +12,7 @@
         "platform": "node",
         "outputPath": "dist/apps/image-resizer",
         "format": ["cjs"],
-        "bundle": false,
+        "bundle": true,
         "main": "apps/image-resizer/src/main.ts",
         "tsConfig": "apps/image-resizer/tsconfig.app.json",
         "assets": ["apps/image-resizer/src/assets"],
