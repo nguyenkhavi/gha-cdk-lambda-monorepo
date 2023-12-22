@@ -2,7 +2,7 @@
 
 [![GitHub Actions Status](https://github.com/nguyenkhavi/gha-cdk-lambda-monorepo/actions/workflows/dev.yaml/badge.svg)](https://github.com/nguyenkhavi/gha-cdk-lambda-monorepo/actions)
 
-The AGithub Actions - AWS CDK Lambda Monorepo Starter is a comprehensive template designed for efficiently building and deploying multiple Lambda functions using AWS Cloud Development Kit (CDK), GitHub Actions, and NX monorepo. This starter project streamlines the creation of a robust CI/CD pipeline, allowing you to focus on developing serverless functions while maintaining a scalable and organized codebase.
+The Github Actions - AWS CDK Lambda Monorepo Starter is a comprehensive template designed for efficiently building and deploying multiple Lambda functions using AWS Cloud Development Kit (CDK), GitHub Actions, and NX monorepo. This starter project streamlines the creation of a robust CI/CD pipeline, allowing you to focus on developing serverless functions while maintaining a scalable and organized codebase.
 
 - [Motivation](#motivation)
 - [Features](#features)
