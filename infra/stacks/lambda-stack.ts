@@ -4,7 +4,7 @@ import {
   Role,
   ServicePrincipal,
 } from 'aws-cdk-lib/aws-iam';
-import { Stack } from 'aws-cdk-lib';
+import { Duration, Stack } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import {
   AWS_ACCOUNT_ID,
@@ -22,6 +22,7 @@ export class LambdaStack extends Stack {
       new Function(this, getResourceId('LambdaFunction', name), {
         runtime: Runtime.NODEJS_20_X,
         code: Code.fromAsset(`../dist/apps/${name}`),
+        timeout: Duration.seconds(50), // ? https://stackoverflow.com/questions/36419442/the-role-defined-for-the-function-cannot-be-assumed-by-lambda
         environment: {},
         handler: 'main.handler',
         role: Role.fromRoleName(

@@ -42,7 +42,7 @@ jobs:
 
   iam_deploy:
     needs: build_asset
-    name: Deploy IAM Task execution Role Development
+    name: Deploy IAM Lambda Role
     runs-on: ubuntu-latest
     environment: Development
     permissions:
