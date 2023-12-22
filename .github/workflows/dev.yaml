@@ -55,6 +55,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist
+          path: dist
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -90,6 +91,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist
+          path: dist
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
